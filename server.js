@@ -5,5 +5,9 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config/config.env' });
 
+app.get('/', (req, res) => {
+    res.send('hello from express');
+})
+
 app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
 
