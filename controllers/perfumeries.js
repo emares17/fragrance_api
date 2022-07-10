@@ -14,10 +14,20 @@ exports.getPerfumery = (req, res, next) => {
 
 // Description: Create new perfumeries
 // Route: POST /api/v1/perfumeries
-exports.createPerfumery = (req, res, next) => {
-    console.log(req.body);
-    res.status(200).json({ success: true, msg: 'Create new perfumery'});
-}
+exports.createPerfumery = async (req, res, next) => {
+    try {
+        const perfumery = await Perfumeries.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            data: perfumery
+        });
+    } catch(err) {
+        res.status(400).json({
+            success: false
+        });
+    }
+};
 
 // Description: Update perfumeries
 // Route: PUT /api/v1/perfumeries/:id
