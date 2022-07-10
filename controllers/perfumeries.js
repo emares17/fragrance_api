@@ -1,3 +1,5 @@
+const Perfumeries = require('../models/Perfumeries');
+
 // Description: Get all perfumeries
 // Route: GET /api/v1/perfumeries
 exports.getPerfumeries = (req, res, next) => {
@@ -13,6 +15,7 @@ exports.getPerfumery = (req, res, next) => {
 // Description: Create new perfumeries
 // Route: POST /api/v1/perfumeries
 exports.createPerfumery = (req, res, next) => {
+    console.log(req.body);
     res.status(200).json({ success: true, msg: 'Create new perfumery'});
 }
 
