@@ -3,8 +3,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const errorHandler = require('./middleware/error')
 const connectDB = require('./config/db')
 const colors = require('colors')
+
 
 // Body parser
 app.use(express.json());
@@ -25,6 +27,10 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount Routes
 app.use('/api/v1/perfumeries', perfumeries);
+
+// Error handler middleware
+app.use(errorHandler);
+
 
 const server = app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));
 

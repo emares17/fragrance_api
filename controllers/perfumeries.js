@@ -1,4 +1,5 @@
 const Perfumeries = require('../models/Perfumeries');
+const ErrorResponse = require('../utility/errorResponse');
 
 // Description: Get all perfumeries
 // Route: GET /api/v1/perfumeries
@@ -24,9 +25,7 @@ exports.getPerfumery = async (req, res, next) => {
         const perfumery = await Perfumeries.findById(req.params.id);
 
         if (!perfumery) {
-            return res.status(400).json({
-                success: false
-            });
+            return next(new ErrorResponse(`Perfumery not found with an id of ${req.params.id}`, 404));
         }
 
         res.status(200).json({ 
@@ -34,9 +33,10 @@ exports.getPerfumery = async (req, res, next) => {
             data: perfumery
         });
     } catch(err) {
-        res.status(400).json({
-            success: false
-        });
+        // res.status(400).json({
+        //     success: false
+        // });
+        next(new ErrorResponse(`Perfumery not found with an id of ${req.params.id}`, 404));
     }
 }
 
