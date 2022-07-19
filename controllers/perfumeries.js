@@ -12,9 +12,7 @@ exports.getPerfumeries = async (req, res, next) => {
             data: perfumeries
         });
     } catch(err) {
-        res.status(400).json({
-            success: false
-        });
+      next(err);
     }
 }
 
@@ -33,10 +31,7 @@ exports.getPerfumery = async (req, res, next) => {
             data: perfumery
         });
     } catch(err) {
-        // res.status(400).json({
-        //     success: false
-        // });
-        next(new ErrorResponse(`Perfumery not found with an id of ${req.params.id}`, 404));
+        next(err);
     }
 }
 
@@ -50,9 +45,7 @@ exports.createPerfumery = async (req, res, next) => {
             data: perfumery
         });
     } catch(err) {
-        res.status(400).json({
-            success: false
-        });
+       next(err);
     }
 };
 
@@ -66,18 +59,16 @@ exports.updatePerfumery = async (req, res, next) => {
         });
     
         if (!perfumery) {
-            return res.status(400).json({
-                success: false
-            });
+            if (!perfumery) {
+                return next(new ErrorResponse(`Perfumery not found with an id of ${req.params.id}`, 404));
+            }
         }
         res.status(200).json({
             success: true,
             data: perfumery
         });
     } catch(err) {
-        res.status(400).json({
-            success: false
-        });
+        next(err);
     }
 }
 
@@ -88,17 +79,15 @@ exports.deletePerfumery = async (req, res, next) => {
         const perfumery = await Perfumeries.findByIdAndDelete(req.params.id);
     
         if (!perfumery) {
-            return res.status(400).json({
-                success: false
-            });
+            if (!perfumery) {
+                return next(new ErrorResponse(`Perfumery not found with an id of ${req.params.id}`, 404));
+            }
         }
         res.status(200).json({
             success: true,
             data: {}
         });
     } catch(err) {
-        res.status(400).json({
-            success: false
-        });
+       next(err);
     }
 }
